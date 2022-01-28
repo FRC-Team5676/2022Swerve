@@ -6,14 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class Robot extends TimedRobot {
   private final XboxController m_controller = new XboxController(0);
   private final Drivetrain m_swerve = new Drivetrain();
-  //private final Joystick m_stick = new Joystick(0);
 
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
   private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(3);
@@ -28,7 +26,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    driveWithJoystick(true);
+    driveWithJoystick(false);
   }
 
   private void driveWithJoystick(boolean fieldRelative) {
@@ -50,22 +48,6 @@ public class Robot extends TimedRobot {
     final var rot = -m_rotLimiter.calculate(MathUtil.applyDeadband(m_controller.getRightX(), 0.02))
         * Drivetrain.kMaxAngularSpeed;
 
-
-    // Get stick values
-    //double forward = -1 * m_stick.getRawAxis(1); /* positive is forwardard */
-    //double side = +1 * m_stick.getRawAxis(0); /* positive is right */
-    //double rotate = +1 * m_stick.getRawAxis(4); /* positive is down */
-
-    /* deadband gamepad 10% */
-    /*if (Math.abs(forward) < 0.10) {
-      forward = 0;
-    }
-    if (Math.abs(side) < 0.10) {
-      side = 0;
-    }
-    if (Math.abs(rotate) < 0.10) {
-      rotate = 0;
-    }*/
     m_swerve.drive(xSpeed, ySpeed, rot, fieldRelative);
   }
 }

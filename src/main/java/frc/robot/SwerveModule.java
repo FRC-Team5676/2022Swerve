@@ -12,7 +12,9 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
 
 public class SwerveModule {
   private static final double kWheelRadius = 0.0508;
@@ -23,7 +25,7 @@ public class SwerveModule {
       2 * Math.PI; // radians per second squared
 
   private final MotorController m_driveMotor;
-  private final MotorController m_turningMotor;
+  private final TalonSRX m_turningMotor;
 
   private final Encoder m_driveEncoder;
   private final Encoder m_turningEncoder;
@@ -62,7 +64,7 @@ public class SwerveModule {
       int turningEncoderChannelA,
       int turningEncoderChannelB) {
     m_driveMotor = new PWMSparkMax(driveMotorChannel);
-    m_turningMotor = new PWMSparkMax(turningMotorChannel);
+    m_turningMotor = new TalonSRX(turningMotorChannel);
 
     m_driveEncoder = new Encoder(driveEncoderChannelA, driveEncoderChannelB);
     m_turningEncoder = new Encoder(turningEncoderChannelA, turningEncoderChannelB);
